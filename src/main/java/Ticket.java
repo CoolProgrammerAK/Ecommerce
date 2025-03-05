@@ -30,11 +30,6 @@ public class Ticket {
     }
     public void setResolved(boolean resolved) { isResolved = resolved; }
 
-    //Constraint 23: TicketHasUser
-    public User getUser() {
-        return user;
-    }
-
     // Main method for demonstration
     public static void main(String[] args) {
         // Creating a new ticket

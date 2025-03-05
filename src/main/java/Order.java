@@ -55,7 +55,6 @@ public class Order {
         }
     }
     // Method to calculate the total price of the order
-    //Constraint 36: TotalPriceCalculation
     public void calculateTotalPrice(float price, int quantity) {
 
         float totalPrice = 0;

@@ -9,7 +9,6 @@ public class Wishlist {
     }
 
     // Method to add an item to the wishlist
-    //Constraint 33: OnlyProductsInWishlist
     public void addItem(Product p) {
         if (!product.contains(p)) { // Prevent adding duplicates
             product.add(p);

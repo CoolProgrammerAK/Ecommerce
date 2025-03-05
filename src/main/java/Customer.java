@@ -37,7 +37,6 @@ public class Customer extends User {
     }
 
     // Method to place an order
-    //Constraint 34:OrderQuantitiesDoNotExceedStock
     public Order placeOrder() {
         // Logic to create and add an order to the customer's list of orders.
         for (CartItem item : this.shoppingCart.getItems()) {
@@ -79,7 +78,6 @@ public class Customer extends User {
         return wishlist;
     }
 
-    //Constraint 30:SingleCustomer
     public ShoppingCart createCart() {
         return new ShoppingCart(this);
     }

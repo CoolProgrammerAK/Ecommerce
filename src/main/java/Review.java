@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Review {
     private String reviewID;
     private String title;
@@ -71,25 +69,6 @@ public class Review {
     public void setProductID(String productID) {
         this.productID = productID;
     }
-    // Constraint 2: ReviewByPurchasingCustomer
-    public boolean isValidReviewByPurchasingCustomer(Customer customer, List<Order> orders) {
-        int customerId = customer.getUserId();
-        for (Order order : orders) {
-            if (order.getUserId()==customerId && order.getProductId().contains(productID)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    // Constraint 3: SingleProductReview
-    public static boolean isSingleProductReview(List<Rating> ratings) {
-        return ratings.stream().map(Rating::getProductID).distinct().count() == 1;
-    }
 
-    // Constraint 5: CannotDeleteIfOnlyReview
-    public static boolean canDeleteReview(List<Rating> allRatings, Rating reviewToDelete) {
-        String productIDToDelete = reviewToDelete.getProductID();
-        long countReviewsForProduct = allRatings.stream().filter(r -> r.getProductID().equals(productIDToDelete)).count();
-        return countReviewsForProduct > 1;
-    }
+
 }

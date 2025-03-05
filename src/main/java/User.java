@@ -25,8 +25,6 @@ public class User {
     public boolean login(String username, String password) {
         return this.username.equals(username) && this.password.equals(password);
     }
-    // Constraint 42: UniqueUserID
-    //Constraint 43: OnlyOneRegistration
     public void register(String username, String password, String email) {
         for (User user : allUsers) {
             if (user.getUserId() == userId) {
@@ -52,7 +50,6 @@ public class User {
 
     public String getUsername() { return username; }
 
-    //Constraint 41:NonEmptyUsername
     public void setUsername(String username) {
         if (username == null || username.trim().isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty.");

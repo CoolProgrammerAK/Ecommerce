@@ -11,7 +11,6 @@ public class CustomerSupport extends User {
         this.assignedTickets = new ArrayList<>();
     }
 
-    //Constraint 24: CanAssistUnresolvedTicket
     public void assignTicket(Ticket ticket) {
 
         if (!ticket.isResolved()) {
@@ -22,7 +21,6 @@ public class CustomerSupport extends User {
         }
     }
 
-    //Constraint 22:TicketResolvedByCustomerSupport
     public boolean resolveTicket(String ticketId) {
         boolean removed = false;
         for (Ticket ticket : assignedTickets) {
@@ -46,8 +44,4 @@ public class CustomerSupport extends User {
 
 
 
-    // Constraint 7: ResolvedByCustomerSupport
-    public boolean isResolvedByCustomerSupport(Ticket ticket) {
-        return assignedTickets.stream().anyMatch(t -> t.equals(ticket));
-    }
 }

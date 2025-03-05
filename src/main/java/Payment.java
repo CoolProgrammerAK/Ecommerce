@@ -43,7 +43,6 @@ public class Payment {
         return paymentID;
     }
 
-    // Constraint 19: NonEmptyPayemntID
     public void setId(String id) {
         if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException("ID cannot be empty.");
@@ -78,8 +77,6 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
-
-    //Constraint 18: paymentStatusWhenCompleted
     public void setStatus(String status) {
         this.status = status;
         if ("completed".equals(status)) {
@@ -91,7 +88,6 @@ public class Payment {
         return paymentDetails;
     }
 
-    //Constraint 20: DetailRequiredIfNotpaymentStatus
     public void setPaymentDetails(String paymentDetails) {
         if (!this.paymentStatus && (paymentDetails == null || paymentDetails.trim().isEmpty())) {
             throw new IllegalArgumentException("paymentDetails cannot be empty if the payment is not completed.");
@@ -99,6 +95,5 @@ public class Payment {
         this.paymentDetails = paymentDetails;
     }
 
-    //Constraints 21: SingleInvoice
 
 }

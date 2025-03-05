@@ -13,7 +13,6 @@ public class ShoppingCart {
         this.creationDate = new Date(); // Set the creation date to the current date
     }
 
-    // Constraint 28: NoDuplicateProducts
     public void addItem(Product product, int quantity) {
 
         for (CartItem item : items) {
@@ -59,7 +58,6 @@ public class ShoppingCart {
         this.creationDate = creationDate;
     }
 
-    //Constraint 29: NonEmptyCart
     public List<CartItem> checkout() {
         if (items.isEmpty()) {
             throw new IllegalStateException("Cannot checkout an empty shopping cart.");
