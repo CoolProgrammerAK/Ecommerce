@@ -8,7 +8,7 @@ public class NotificationTest {
         // Test seller constructor and getter methods
         Notification notif = new Notification("01","Alert");
         assertEquals("01", notif.getUserID());
-        assertEquals("Alert", notif.getContent());
+        assertEquals("Alert", notif.getmessage());
 
 
     }

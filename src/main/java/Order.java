@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     private String orderId;
@@ -9,10 +11,28 @@ public class Order {
     private String status;
     private float totalAmount;
     private ShoppingCart shoppingCart;
-
+    private static List<Order> allOrders = new ArrayList<>();
+    private String deliveryStatus;
+    // Constraint 19  Unique Order ID
+// Constraint 25 Order Cannot Be Marked Delivered Without a Successful Payment
+    // Constraint 20: Check if the product is in stock before placing the order
     // Constructor
     public Order(String orderId, int userId, String productId, Date orderDate,
                  Date deliveryDate, String status, float totalPrice) {
+        // Constraint 19: Check if the order ID is unique
+        for (Order order : allOrders) {
+            if (order.getOrderId().equals(orderId)) {
+                throw new IllegalArgumentException("Order ID must be unique.");
+            }
+        }
+
+        boolean productInStock = Product.allInstances().stream()
+                .anyMatch(p -> p.getProductId().equals(productId) && p.getStock() > 0);
+
+        if (!productInStock) {
+            throw new IllegalArgumentException("The ordered product is out of stock.");
+        }
+
         this.orderId = orderId;
         this.userId = userId;
         this.productId = productId;
@@ -20,14 +40,15 @@ public class Order {
         this.deliveryDate = deliveryDate;
         this.status = status;
         this.totalAmount = totalPrice;
+        this.deliveryStatus = "Placed";
+        allOrders.add(this); // Add order to the list of all orders
     }
 
-    public Order(String string, int i, String string2, float f, ShoppingCart cart) {
-        // TODO Auto-generated constructor stub
-    }
+    // Other methods (cancelOrder, shipOrder, deliverOrder, etc.) remain unchanged...
 
     // Method to place an order
     public void placeOrder() {
+        // This is where we would enforce the stock constraint, so it's handled in the constructor
         this.status = "Placed";
         this.orderDate = new Date();
     }
@@ -43,20 +64,27 @@ public class Order {
     public void shipOrder() {
         if (this.status.equals("Placed")) {
             this.status = "Order shipped";
-
         }
     }
 
-    public void deliverOrder() {
+    // Constraint 25: Cannot mark delivered without successful payment
+    public void deliverOrder(List<Payment> payments) {
         if (this.status.equals("Placed")) {
-            this.status = "Order delivered";
-            this.deliveryDate = new Date();
+            boolean paymentSuccessful = payments.stream()
+                    .anyMatch(p -> p.getOrderId().equals(this.orderId) && p.isPaymentStatus());
 
+            if (paymentSuccessful) {
+                this.status = "Order delivered";
+                this.deliveryDate = new Date();
+                this.deliveryStatus = "Delivered"; // Mark as delivered
+            } else {
+                System.out.println("Cannot deliver the order. Payment is not successful.");
+            }
         }
     }
+
     // Method to calculate the total price of the order
     public void calculateTotalPrice(float price, int quantity) {
-
         float totalPrice = 0;
         for (CartItem item : this.shoppingCart.getItems()) {
             totalPrice += item.getProduct().getProductPrice() * item.getQuantity();
@@ -121,29 +149,26 @@ public class Order {
         this.totalAmount = totalPrice;
     }
 
+    // Main method for demonstration
     public static void main(String[] args) {
         ShoppingCart cart = new ShoppingCart(null); // Assuming a ShoppingCart class exists
-        Order order = new Order("ORD123", 1, "PRD456", 99.99f, cart);
+
+        // Assuming a product with ID "PRD456" exists and is in stock
+        Product product = new Product("PRD456", "TV",10000f,"Des",5); // Assuming Product class exists
+        List<Product> products = new ArrayList<>();
+        products.add(product); // Adding product to list of products in stock
+
+        // Trying to create an order for a product that is in stock
+        Order order = new Order("ORD123", 1, "PRD456", new Date(), null, "Placed", 99.99f);
 
         // Place the order
         order.placeOrder();
         System.out.println("Order Status: " + order.getStatus());
 
-        // Try to cancel the order
-        if (order.cancelOrder()) {
-            System.out.println("Order was cancelled.");
-        } else {
-            System.out.println("Order could not be cancelled.");
-        }
-
-
-        // Ship the order
-        order.shipOrder();
-        System.out.println("Order Status: " + order.getStatus());
-
-        // Deliver the order
-        order.deliverOrder();
-        System.out.println("Order Status: " + order.getStatus());
+        // Assuming other operations (like payment, delivery) follow...
     }
 }
 
+
+// Constraint 19  Unique Order ID
+// Constraint 25 Order Cannot Be Marked Delivered Without a Successful Payment

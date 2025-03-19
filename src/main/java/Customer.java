@@ -15,7 +15,8 @@ public class Customer extends User {
         this.phone = phone;
         this.orders = new ArrayList<>();
         this.shoppingCart = new ShoppingCart(null);
-        this.wishlist = new Wishlist();
+//        this.wishlist =
+//                new Wishlist(new Product("ProductID", "ProductName", 99.8f));
     }
 
     // Methods to interact with the shopping cart

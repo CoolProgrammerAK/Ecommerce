@@ -3,6 +3,8 @@ public class Rating {
     private int stars;
     private String userId;
     private String productID;
+
+    // Constraint 30 The Star Rating Must Be Between 1 and 5
     // Constructor
     public Rating(String ratingId, int stars, String userId, String productId) {
         this.ratingId = ratingId;
